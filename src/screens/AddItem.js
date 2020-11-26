@@ -17,6 +17,7 @@ export default function AddList(props) {
   const [ItemName, setItemName] = useState("");
   const [ItemQtd, setItemQtd] = useState("");
   
+  
   const statusModal = useSelector((state) => state.showModal.showModalADDITEM);
   const id = useSelector((state) => state.collects.currentID);
 
@@ -40,6 +41,10 @@ export default function AddList(props) {
       setItemName("")  
       setItemQtd("")  
       props.navigation.goBack();
+      dispatch({type: 'REFRESH', payload:[true]})
+      setInterval(() => {
+        dispatch({type: 'REFRESH', payload:[false]})
+       }, 1000)
     }
   }
   function closeModal() {

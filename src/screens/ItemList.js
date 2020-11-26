@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,7 @@ export default function ItemList (props) {
 
   const id = useSelector((state) => state.collects.currentID);
   const itensCollect = useSelector((state) => state.collects.collects[id])
+  const refresh = useSelector((state) => state.collects.refresh)
 
     return (
       <View style={styles.container}>
@@ -41,6 +42,7 @@ export default function ItemList (props) {
                 <Item {...item}></Item>
               </View>
             )}
+            refreshControl={<RefreshControl refreshing={refresh}/>}
           />
         </View>
         <TouchableOpacity style={styles.addButton} onPress={() =>props.navigation.navigate('Scanner')}
@@ -57,10 +59,11 @@ export default function ItemList (props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:20
   },
   headerView: {
     flex: 1,
-    backgroundColor: commonStyles.color.principal,
+    backgroundColor: '#055c82',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -70,18 +73,33 @@ const styles = StyleSheet.create({
   },
   tittle: {
     fontFamily: commonStyles.fontFamily,
-    fontSize: 20,
+    fontSize: 25,
     color: commonStyles.color.secondary,
+    borderBottomWidth: 2,
+    borderBottomColor:'#FFF',
+    borderBottomLeftRadius:5,
+    borderBottomRightRadius:5,
   },
   buttonGoBack: {
     position: 'absolute',
     left: 30,
-    top: 30,
+    top: 40,
+    height:50,
+    width:50,
+    borderRadius:25,
+    alignItems:'center',
+    justifyContent:'center',
+    
   },
   buttonOpenScanner:{
     position: 'absolute',
     right: 30,
-    top: 30,
+    top: 40,
+    height:50,
+    width:50,
+    borderRadius:25,
+    alignItems:'center',
+    justifyContent:'center',
   },
   addButton:{
     position:'absolute',

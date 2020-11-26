@@ -1,6 +1,7 @@
 
 
 const inicialState = {
+    refresh:null,
     currentID:null,
     collects: [{
         id: 0,
@@ -31,7 +32,7 @@ const reducer = (state = inicialState, action) => {
     switch(action.type) {
         case 'ADD_COLLECT':
 
-        const collect ={
+        let collect ={
             id: id++,
             nome: action.payload[0],
             dateAt: action.payload[1],
@@ -68,7 +69,7 @@ const reducer = (state = inicialState, action) => {
                 currentID: action.payload[0]
             }
             case 'ADD_ITEM':
-                if (state.collects[state.currentID].itens.find(element => element.cod != action.payload[2]) != undefined){ 
+                if (state.collects[state.currentID].itens.find(element => element.cod == action.payload[2]) == undefined){ 
 
                     let item ={
                         id:idItem ++,
@@ -84,21 +85,17 @@ const reducer = (state = inicialState, action) => {
                     }
                 }
                 else {
-                    return{
-                        ...state,
-                        collects: [state.collects[action.payload[0]].itens.map((item, index)=>{
-                            if (item.cod === action.payload[2]) {
-                                return {
-                                    ...item,
-                                    qtd: (item.qtd +1)
-                                }
-                            }
-                            return item
-
-                        })]
-                    }
+                  let auxItem = [...state.collects[state.currentID].itens]
+                  auxItem.find(element => element.cod == action.payload[2]).qtd += action.payload[3]
+                  
+                    return {...state, ...state.collects, itens: [...auxItem]}
 
                 }
+                case 'REFRESH':
+            return{
+                ...state,
+                refresh: action.payload[0]
+            }
             
         default: 
         return state                   

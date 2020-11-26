@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
     borderLeftColor: commonStyles.color.principal,
+    backgroundColor:'white'
     
   },
   textCollect: {
