@@ -21,12 +21,17 @@ export default function AddList() {
 
   function addCollect() {
     if (!collectName || !collectName.trim()) {
-      Alert.alert('Dados Invalidos', 'Descrição não Informada!');
+      Alert.alert('Dados Inválidos', 'Descrição não Informada!');
       return;
     } else {
       dispatch({type: 'ADD_COLLECT', payload:[collectName, new Date()]});
       closeModal()
       setCollectName('')
+      dispatch({type: 'REFRESH', payload:[true]})
+      setInterval(() => {
+        dispatch({type: 'REFRESH', payload:[false]})
+       }, 1000)
+      
 
     }
   }

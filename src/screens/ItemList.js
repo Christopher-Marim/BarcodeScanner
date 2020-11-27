@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl, SafeAreaView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -13,10 +13,10 @@ export default function ItemList (props) {
   const refresh = useSelector((state) => state.collects.refresh)
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
        
         <View style={styles.headerView}>
-    <Text style={styles.tittle}>{itensCollect.nome}</Text>
+    <Text style={styles.text}>{itensCollect.nome}</Text>
         </View>
         <View style={styles.buttonGoBack}>
           <TouchableOpacity onPress={() => props.navigation.goBack()}>
@@ -32,7 +32,8 @@ export default function ItemList (props) {
             </View>
           </TouchableOpacity>
         </View>
-
+        {itensCollect.itens.length > 0 && (
+          <View style={{ flex:9 }}>
         <View style={styles.itemList}>
           <FlatList
             data={itensCollect.itens}
@@ -47,11 +48,22 @@ export default function ItemList (props) {
         </View>
         <TouchableOpacity style={styles.addButton} onPress={() =>props.navigation.navigate('Scanner')}
           activeOpacity={0.7}
-        
         >
           <Icon name='plus' size={20} color={commonStyles.color.secondary}/>
         </TouchableOpacity>
-      </View>
+        </View>
+        )}
+         {itensCollect.itens.length == 0 && (
+           <View style={{flex:9, justifyContent:'center', alignItems:'center'}}>
+              <TouchableOpacity style={styles.addButtonCenter} onPress={() =>props.navigation.navigate('Scanner')}
+          activeOpacity={0.7}
+        
+        >
+          <Text style={styles.textButton}>Scann Iten</Text>
+        </TouchableOpacity>
+           </View>
+         )}
+      </SafeAreaView>
     );
   
 }
@@ -63,15 +75,14 @@ const styles = StyleSheet.create({
   },
   headerView: {
     flex: 1,
-    backgroundColor: '#055c82',
+    backgroundColor:commonStyles.color.itensPrincipal,
     alignItems: 'center',
     justifyContent: 'center',
   },
   itemList: {
-    flex: 9,
     padding: 5,
   },
-  tittle: {
+  text: {
     fontFamily: commonStyles.fontFamily,
     fontSize: 25,
     color: commonStyles.color.secondary,
@@ -111,5 +122,19 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignItems:'center',
     backgroundColor:commonStyles.color.principal
+  },
+  addButtonCenter:{
+    position:'absolute',
+    width:200,
+    height:50,
+    borderRadius:5,
+    justifyContent:"center",
+    alignItems:'center',
+    backgroundColor:commonStyles.color.itensPrincipal
+
+  },
+  textButton: {
+    fontSize:20,
+    color: commonStyles.color.secondary
   }
 });

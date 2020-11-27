@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import AddItem from "./AddItem";
 
@@ -10,7 +10,11 @@ export default function App(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcodeCodes, setBarcode] = useState('')
+  const statusModal = useSelector((state) => state.showModal.showModalADDITEM)
 
+  if (!statusModal && scanned == true) {
+    setScanned(false)
+  }
 
 
   useEffect(() => {
