@@ -23,6 +23,13 @@ export default function CollectList({ navigation }) {
 
   const dispatch = useDispatch();
 
+  const onRefresh = () =>{
+    dispatch({type: 'REFRESH', payload:[true]})
+        setInterval(() => {
+          dispatch({type: 'REFRESH', payload:[false]})
+         }, 1000)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Modal></Modal>
@@ -41,7 +48,7 @@ export default function CollectList({ navigation }) {
                   <Collect {...item} navigation={navigation}></Collect>
                 </View>
               )}
-              refreshControl={<RefreshControl refreshing={refresh} />}
+              refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh}/>}
             />
           </View>
           <TouchableOpacity

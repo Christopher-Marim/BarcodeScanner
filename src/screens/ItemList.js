@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl, SafeAreaView} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, RefreshControl, SafeAreaView,ScrollView} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,6 +11,16 @@ export default function ItemList (props) {
   const id = useSelector((state) => state.collects.currentID);
   const itensCollect = useSelector((state) => state.collects.collects[id])
   const refresh = useSelector((state) => state.collects.refresh)
+
+  const dispatch = useDispatch();
+
+  // faz o Refresh nos Itens, para atualizar o FlatList
+  const onRefresh = () =>{
+    dispatch({type: 'REFRESH', payload:[true]})
+        setInterval(() => {
+          dispatch({type: 'REFRESH', payload:[false]})
+         }, 1000)
+  }
 
     return (
       <SafeAreaView style={styles.container}>
@@ -39,11 +49,11 @@ export default function ItemList (props) {
             data={itensCollect.itens}
             keyExtractor={(item) => `${item.id}`}
             renderItem={({item}) => (
-              <View style={{padding: 3}}>
+              <View style={{padding: 3}} >
                 <Item {...item}></Item>
               </View>
             )}
-            refreshControl={<RefreshControl refreshing={refresh}/>}
+            refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh}/>}
           />
         </View>
         <TouchableOpacity style={styles.addButton} onPress={() =>props.navigation.navigate('Scanner')}

@@ -26,6 +26,10 @@ export default function AddList(props) {
 
   const ref_input2 = useRef();
 
+  // Função para Adicionar um novo item a lista de itens, verificando se a variavel ItemName foi preenchida, 
+  // caso não Retorna um Alert, caso tanto a descrição quanto a quantidade tenham sido preenchidas, add item, fecha a modal, 
+  // reseta o estado dos textInput's, retorna para a screen de ItemList e faz o refresh na mesma
+  
   function addItem() {
     if (!ItemName || !ItemName.trim()) {
       Alert.alert('Dados Inválidos', 'Descrição não Informada!');
@@ -41,10 +45,12 @@ export default function AddList(props) {
       setItemName("")  
       setItemQtd("")  
       props.navigation.goBack();
-      dispatch({type: 'REFRESH', payload:[true]})
-      setInterval(() => {
-        dispatch({type: 'REFRESH', payload:[false]})
-       }, 1000)
+      
+        dispatch({type: 'REFRESH', payload:[true]})
+        setInterval(() => {
+          dispatch({type: 'REFRESH', payload:[false]})
+         }, 1000)
+      
     }
   }
   function closeModal() {
