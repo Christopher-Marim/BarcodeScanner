@@ -25,7 +25,7 @@ export default function AddList() {
       Alert.alert('Dados Invalidos', 'Descrição não Informada!');
       return;
     } else {
-      dispatch({type: 'EDT_ITEM', payload:[id, EdtItem]});
+      //dispatch({type: 'EDT_ITEM', payload:[id, EdtItem]});
       closeModal()
       setEdtItem('')
 
