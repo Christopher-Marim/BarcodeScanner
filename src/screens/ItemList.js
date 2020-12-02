@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import commonStyles from '../commonStyles';
 import Item from '../components/Item';
+import EditItem from './EditItem'
 
 export default function ItemList (props) {
 
@@ -24,7 +25,7 @@ export default function ItemList (props) {
 
     return (
       <SafeAreaView style={styles.container}>
-       
+       <EditItem></EditItem>
         <View style={styles.headerView}>
     <Text style={styles.text}>{itensCollect.nome}</Text>
         </View>

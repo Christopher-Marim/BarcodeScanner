@@ -2,7 +2,6 @@ import React, {Component, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import commonStyles from '../commonStyles';
@@ -24,7 +23,7 @@ export default function Collect(props) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>{
-            dispacth({type: 'SHOW_MODAL_EDT_ON'})
+            dispacth({type: 'SHOW_MODAL_EDTCOLLECT_ON'})
             dispacth({type:'CURRENT_ID', payload: [props.id]})
           }
             

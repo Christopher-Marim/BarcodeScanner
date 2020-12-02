@@ -84,7 +84,7 @@ const reducer = (state = inicialState, action) => {
       let addId = state.idItem++
 
 
-          let item = {
+          const item = {
             id: addId,
             nome: action.payload[1],
             cod: action.payload[2],
@@ -112,18 +112,19 @@ const reducer = (state = inicialState, action) => {
             {
               text: "AddItem",
               onPress: () => {
-                let item = {
-                  id: state.idItem++,
+                let addId = state.idItem++
+                const item = {
+                  id: addId,
                   nome: action.payload[1],
                   cod: action.payload[2],
                   qtd: action.payload[3],
                 };
                 let auxCollects = [...state.collects];
-                auxCollects[state.currentID].itens.push(item);
+               auxCollects[state.currentID].itens.push(item);
                 return {
                   ...state,
                   idItem: state.idItem++,
-                  collects: [...auxCollects],
+                  collects: [ ...auxCollects],
                 };
               },
             },
@@ -146,6 +147,22 @@ const reducer = (state = inicialState, action) => {
           { cancelable: false }
         );
       }
+
+    case "EDT_ITEM":
+        return {
+            ...state,
+            collects: [
+              ...state.collects[state.currentID].itens.map((item, index) => {
+                if (index === action.payload[0]) {
+                  return {
+                    ...item,
+                    nome: action.payload[1],
+                  };
+                }
+                return item;
+              }),
+            ],
+          };
     case "REFRESH":
       return {
         ...state,

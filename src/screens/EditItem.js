@@ -14,25 +14,25 @@ import {useDispatch, useSelector, connect} from 'react-redux';
 import commonStyles from '../commonStyles';
 
 export default function AddList() {
-  const [collectName, setCollectName] = useState('');
-  const statusModal = useSelector((state) => state.showModal.showModalEDTCOLLECT);
+  const [EdtItem, setEdtItem] = useState('');
+  const statusModal = useSelector((state) => state.showModal.showModalEDTITEM);
   const id = useSelector((state) => state.collects.currentID);
 
   const dispatch = useDispatch();
 
-  function edtCollect() {
-    if (!collectName || !collectName.trim()) {
+  function SaveEDTItem() {
+    if (!EdtItem || !EdtItem.trim()) {
       Alert.alert('Dados Invalidos', 'Descrição não Informada!');
       return;
     } else {
-      dispatch({type: 'EDIT_COLLECT', payload:[id, collectName]});
+      dispatch({type: 'EDT_ITEM', payload:[id, EdtItem]});
       closeModal()
-      setCollectName('')
+      setEdtItem('')
 
     }
   }
   function closeModal() {
-    dispatch({type: 'SHOW_MODAL_EDTCOLLECT_OFF'});
+    dispatch({type: 'SHOW_MODAL_EDTITEM_OFF'});
   }
 
   return (
@@ -51,19 +51,19 @@ export default function AddList() {
           <View style={styles.overlay} />
         </TouchableWithoutFeedback>
         <View style={styles.container}>
-          <Text style={styles.headerModal}> Editar nome da coleta</Text>
+          <Text style={styles.headerModal}> Editar nome do Produto</Text>
           <TextInput
             style={styles.input}
             placeholder="Informe a Descrição"
-            onChangeText={(text) => setCollectName(text)}
-            value={collectName}
+            onChangeText={(text) => setEdtItem(text)}
+            value={EdtItem}
           />
 
           <View style={styles.buttons}>
             <TouchableOpacity onPress={closeModal}>
               <Text style={styles.button}>Cancelar</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={edtCollect}>
+            <TouchableOpacity onPress={SaveEDTItem}>
               <Text style={styles.button}>Salvar</Text>
             </TouchableOpacity>
           </View>

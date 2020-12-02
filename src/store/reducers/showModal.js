@@ -1,7 +1,8 @@
 const inicialState = {
   showModalADDCOLLECT: false,
   showModalADDITEM: false,
-  showModalEDT: false,
+  showModalEDTCOLLECT: false,
+  showModalEDTITEM: false,
 };
 
 const reducer = (state = inicialState, action) => {
@@ -16,15 +17,25 @@ const reducer = (state = inicialState, action) => {
         ...state,
         showModalADDCOLLECT: false,
       };
-    case 'SHOW_MODAL_EDT_ON':
+    case 'SHOW_MODAL_EDTCOLLECT_ON':
       return {
         ...state,
-        showModalEDT: true,
+        showModalEDTCOLLECT: true,
       };
-    case 'SHOW_MODAL_EDT_OFF':
+    case 'SHOW_MODAL_EDTCOLLECT_OFF':
       return {
         ...state,
-        showModalEDT: false,
+        showModalEDTCOLLECT: false,
+      };
+    case 'SHOW_MODAL_EDTITEM_ON':
+      return {
+        ...state,
+        showModalEDTITEM: true,
+      };
+    case 'SHOW_MODAL_EDTITEM_OFF':
+      return {
+        ...state,
+        showModalEDTITEM: false,
       };
       case 'SHOW_MODAL_ADDITEM_ON':
         return {
