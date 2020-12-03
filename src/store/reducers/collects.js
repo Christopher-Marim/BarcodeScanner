@@ -1,57 +1,35 @@
-import React from "react";
+
 import { Alert } from "react-native";
 
 const inicialState = {
-  idCollect: 2,
-  idItem: 1,
+  idCollect: 0,
+  idItem: 0,
   refresh: null,
   currentID: null,
+  currentIDitem: null,
   AddItem: true,
-  collects: [
-    {
-      id: 0,
-      nome: "dale",
-      dateAt: new Date(),
-      itens: [
-        {
-          id: 0,
-          nome: "Item 1",
-          cod: 1234,
-          qtd: 10,
-        },
-      ],
-    },
-    {
-      id: 1,
-      nome: "dole",
-      dateAt: new Date(),
-      itens: [],
-    },
-  ],
+  collects: [],
 };
 
-var id = 1;
-var idItem = 1;
-
 const reducer = (state = inicialState, action) => {
-     switch (action.type) {
+  switch (action.type) {
     case "ADD_COLLECT":
-      let addId = state.idCollect++;
 
       const collect = {
-        id: addId,
+        id: state.idCollect,
         nome: action.payload[0],
         dateAt: action.payload[1],
         itens: [],
       };
-
+      state.idCollect++
       return {
         ...state,
-        id: state.idCollect++,
         collects: [...state.collects, collect],
       };
     case "DEL_COLLECT":
-      let indexCollectToRemove = state.collects.findIndex((x) => x.id == action.payload[0]);
+      let indexCollectToRemove = state.collects.findIndex(
+        (x) => x.id == action.payload[0]
+      );
       state.collects.splice(indexCollectToRemove, 1);
       return { ...state, collects: [...state.collects] };
 
@@ -72,102 +50,109 @@ const reducer = (state = inicialState, action) => {
       };
 
     case "CURRENT_ID":
-      let collectIndex = state.collects.findIndex((x) => x.id == action.payload[0] );
+      let collectIndex = state.collects.findIndex(
+        (x) => x.id == action.payload[0]
+      );
 
       return {
         ...state,
         currentID: collectIndex,
       };
+    case "CURRENT_ID_ITEM":
+      let itemIndex = state.collects[state.currentID].itens.findIndex(
+        (x) => x.id == action.payload[0]
+      );
+
+      return {
+        ...state,
+        currentIDitem: itemIndex,
+      };
     case "ADD_ITEM":
-      if (state.collects[state.currentID].itens.find((element) => element.cod == action.payload[2]) == undefined ) {
+      if ( state.collects[state.currentID].itens.find(
+          (element) => element.cod === action.payload[2]) == undefined) {
+        console.log("ID item>", state.idItem);
+        console.log("Current ID ITEM>", state.currentIDitem);
+        console.log("Current ID>", state.currentID);
 
-      let addId = state.idItem++
+        const item = {
+          id: state.idItem,
+          nome: action.payload[1],
+          cod: action.payload[2],
+          qtd: action.payload[3],
+        };
+        let auxCollects = [...state.collects];
+        auxCollects[state.currentID].itens.push(item)
 
-
-          const item = {
-            id: addId,
-            nome: action.payload[1],
-            cod: action.payload[2],
-            qtd: action.payload[3],
-          };
-          let auxCollects = [...state.collects];
-          auxCollects[state.currentID].itens.push(item);
-          return {
-            ...state,
-            idItem: state.idItem++,
-            collects: [...auxCollects],
-          };
-        
+        state.idItem++
+        return {
+          ...state,
+          collects: [...auxCollects] 
+        };
       } else {
         Alert.alert(
           "Item já Existente",
           "Deseja somar a quantidade de produtos ou gerar outro item",
           [
             {
-                text: "Cancelar",
-                onPress: () => console.log("Operação Cancelada"),
-                style: "cancel",
-              },
-            
+              text: "Cancelar",
+              onPress: () => console.log("Operação Cancelada"),
+              style: "cancel",
+            },
+
+            //{
+            //  text: "AddItem",
+            //  onPress: function() {
+
+            //     const item = {
+            //       id: state.idItem++,
+            //       nome: action.payload[1],
+            //      cod: action.payload[2],
+            //       qtd: action.payload[3],
+            //      };
+            //     let auxCollects = [...state.collects];
+            //       auxCollects[state.currentID].itens.push(item);
+            //       console.log('ID item>', {...state})
+            //       console.log('Current ID ITEM>', state.currentIDitem)
+            //       console.log('Current ID>', state.currentID)
+            //       return {
+            //        ...state,
+            //        idItem: state.idItem,
+            //        collects: [...auxCollects],
+
+            //       };
+
+            //      },
+            //   },
             {
-              text: "AddItem",
-              onPress: () => {
-                let addId = state.idItem++
-                const item = {
-                  id: addId,
-                  nome: action.payload[1],
-                  cod: action.payload[2],
-                  qtd: action.payload[3],
-                };
-                let auxCollects = [...state.collects];
-               auxCollects[state.currentID].itens.push(item);
-                return {
-                  ...state,
-                  idItem: state.idItem++,
-                  collects: [ ...auxCollects],
-                };
+              text: "Somar",
+              onPress: () =>{
+                state.collects[state.currentID].itens.find(
+                  (element) => element.cod == action.payload[2]
+                ).qtd += action.payload[3];
               },
             },
-            {
-                text: "Somar",
-                onPress: () => {
-                  let auxItem = [...state.collects[state.currentID].itens];
-                  auxItem.find(
-                    (element) => element.cod == action.payload[2]).qtd += action.payload[3];
-  
-                  return {
-                    ...state,
-                    ...state.collects,
-                    itens: [...auxItem],
-                  };
-                },
-              },
-            
           ],
           { cancelable: false }
         );
       }
 
-    case "EDT_ITEM":
-        return {
-            ...state,
-            collects: [
-              ...state.collects[state.currentID].itens.map((item, index) => {
-                if (index === action.payload[0]) {
-                  return {
-                    ...item,
-                    nome: action.payload[1],
-                  };
-                }
-                return item;
-              }),
-            ],
-          };
+      
+
     case "REFRESH":
       return {
         ...state,
         refresh: action.payload[0],
       };
+      case "DEL_ITEM":
+        let indexItemToRemove = state.collects[state.currentID].itens.findIndex(
+          (x) => x.id == action.payload[0]
+        );
+        console.warn("indexItemToRemove")
+       let delItem = state.collects[state.currentID].itens.splice(indexItemToRemove, 1);
+        return { ...state,  ...state.collects[state.currentID], itens: [...delItem] };
+    case "EDT_ITEM":
+     state.collects[state.currentID].itens[state.currentIDitem].qtd = parseInt(action.payload, 10) ;
+      return { ...state, collects: [...state.collects] };
 
     default:
       return state;
