@@ -16,7 +16,6 @@ import commonStyles from '../commonStyles';
 export default function AddList() {
   const [EdtItem, setEdtItem] = useState('');
   const statusModal = useSelector((state) => state.showModal.showModalEDTITEM);
-  const id = useSelector((state) => state.collects.currentID);
 
   const dispatch = useDispatch();
 
@@ -25,9 +24,13 @@ export default function AddList() {
       Alert.alert('Dados Invalidos', 'Descrição não Informada!');
       return;
     } else {
-      //dispatch({type: 'EDT_ITEM', payload:[id, EdtItem]});
+      dispatch({type: 'EDT_ITEM', payload:EdtItem});
       closeModal()
       setEdtItem('')
+      dispatch({type: 'REFRESH', payload:[true]})
+        setInterval(() => {
+          dispatch({type: 'REFRESH', payload:[false]})
+         }, 1000)
 
     }
   }

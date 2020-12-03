@@ -10,21 +10,18 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default (props) => {
-  const formatteddate = moment(props.dateAt)
-    .locale('pt-br')
-    .format('D/MM/YYYY');
 
     const [borderRadiusCONST, setborderRadius] = useState(10);
 
-    const dispacth = useDispatch();
+    const dispatch = useDispatch();
   
     const getLeftContent = () => {
       return (
         <View style={styles.containerSwipeable}>
           <TouchableOpacity
             onPress={() =>{
-              dispacth({type: 'SHOW_MODAL_EDTITEM_ON'})
-              dispacth({type:'CURRENT_ID', payload: [props.id]})
+              dispatch({type: 'SHOW_MODAL_EDTITEM_ON'})
+              dispatch({type:'CURRENT_ID_ITEM', payload: [props.id]})
             }
               
             }
@@ -35,11 +32,19 @@ export default (props) => {
         </View>
       );
     };
+
+    function DelItem() {
+      dispatch({type: 'DEL_ITEM', payload: [props.id]})
+      dispatch({type: 'REFRESH', payload:[true]})
+      setInterval(() => {
+        dispatch({type: 'REFRESH', payload:[false]})
+       }, 1000)
+    }
     const getRightContent = () => {
       return (
         <View style={styles.containerSwipeable}>
           <TouchableOpacity
-            onPress={() => dispacth({type: 'DEL_COLLECT', payload: [props.id]})}
+            onPress={DelItem}
             style={styles.right}
             activeOpacity={0.5}>
             <Icon name="trash" size={20} color="white" />

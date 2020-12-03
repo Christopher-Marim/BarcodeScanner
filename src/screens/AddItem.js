@@ -14,7 +14,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import commonStyles from '../commonStyles';
 
 export default function AddList(props) {
-  const [ItemName, setItemName] = useState("");
   const [ItemQtd, setItemQtd] = useState("");
   
   
@@ -31,18 +30,17 @@ export default function AddList(props) {
   // reseta o estado dos textInput's, retorna para a screen de ItemList e faz o refresh na mesma
   
   function addItem() {
-    if (!ItemName || !ItemName.trim()) {
-      Alert.alert('Dados Inválidos', 'Descrição não Informada!');
-      return;
-    }if(!ItemQtd || !ItemQtd.trim()){
-        Alert.alert('Dados Inválidos', 'Quantidade não Informada!');
+  //  if (!ItemName || !ItemName.trim()) {
+  //    Alert.alert('Dados Inválidos', 'Descrição não Informada!');
+  //    return;
+  //  }if(!ItemQtd || !ItemQtd.trim()){
+  //      Alert.alert('Dados Inválidos', 'Quantidade não Informada!');
       
-    }
+  //  }
 
-    else {
-      dispatch({type: 'ADD_ITEM', payload:[0, ItemName, props.cod, parseInt(ItemQtd,10)]});
+ //  else {
+      dispatch({type: 'ADD_ITEM', payload:[0, props.cod, props.cod, parseInt(ItemQtd,10)]});
       closeModal()
-      setItemName("")  
       setItemQtd("")  
       props.navigation.goBack();
       
@@ -51,7 +49,7 @@ export default function AddList(props) {
           dispatch({type: 'REFRESH', payload:[false]})
          }, 1000)
       
-    }
+  //  }
   }
   function closeModal() {
     dispatch({type: 'SHOW_MODAL_ADDITEM_OFF'});
@@ -75,13 +73,6 @@ export default function AddList(props) {
         </TouchableWithoutFeedback>
         <View style={styles.container}>
             <Text style={styles.headerModal}>{props.cod}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Informe a Descrição"
-            onChangeText={(text) => setItemName(text)}
-            onSubmitEditing={() => ref_input2.current.focus()}
-            value={ItemName}
-          />
           <TextInput
             style={styles.input}
             ref={ref_input2}
