@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   Text: {
     fontFamily: commonStyles.fontFamily,
+    fontWeight:commonStyles.fontWeight,
     fontSize: 25,
     color: "white",
   },

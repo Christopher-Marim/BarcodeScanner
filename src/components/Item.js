@@ -68,10 +68,10 @@ export default (props) => {
         ]}>
       <View style={styles.textCollect}>
         <Text style={styles.nomeCollect}>{props.nome}</Text>
-      <Text>Cod: {props.cod}</Text>
+      <Text style={{fontWeight:commonStyles.fontWeight}}>Cod: {props.cod}</Text>
       </View>
       <View style={{padding: 10}}>
-        <Text>Quantidade: {props.qtd}</Text>
+        <Text style={{fontWeight:commonStyles.fontWeight,}}>Quantidade: {props.qtd}</Text>
       </View>
     </View>
     </Swipeable>
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   },
   nomeCollect: {
     fontSize: 20,
+    fontWeight:commonStyles.fontWeight,
     marginBottom: 10,
   },
   left2: {
