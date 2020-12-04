@@ -147,7 +147,6 @@ const reducer = (state = inicialState, action) => {
         let indexItemToRemove = state.collects[state.currentID].itens.findIndex(
           (x) => x.id == action.payload[0]
         );
-        console.warn("indexItemToRemove")
        let delItem = state.collects[state.currentID].itens.splice(indexItemToRemove, 1);
         return { ...state,  ...state.collects[state.currentID], itens: [...delItem] };
     case "EDT_ITEM":

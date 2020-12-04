@@ -70,10 +70,10 @@ export default function Collect(props) {
           <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <View style={styles.textCollect}>
               <Text style={styles.nomeCollect}>{props.nome}</Text>
-              <Text>Data: {formatteddate(`${props.dateAt}`)}</Text>
+              <Text style={{ fontWeight:commonStyles.fontWeight}}>Data: {formatteddate(`${props.dateAt}`)}</Text>
             </View>
             <View style={{justifyContent: 'center', padding: 10}}>
-        <Text>Coletas: {props.itens.length}</Text>
+        <Text style={{ fontWeight:commonStyles.fontWeight}}>Coletas: {props.itens.length}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   nomeCollect: {
+    fontWeight:commonStyles.fontWeight,
     fontSize: 20,
     marginBottom: 10,
   },

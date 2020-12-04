@@ -125,12 +125,14 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 16,
+      fontWeight:commonStyles.fontWeight,
       marginTop: 3,
       fontWeight: 'bold',
       color:'white'
     },
     caption: {
       fontSize: 14,
+      fontWeight:commonStyles.fontWeight,
       lineHeight: 14,
     },
     row: {
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
       marginRight: 15,
     },
     paragraph: {
-      fontWeight: 'bold',
+      fontWeight:"bold",
       marginRight: 3,
     },
     drawerSection: {
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
     },
     email:{
         fontSize: 10,
+      fontWeight:commonStyles.fontWeight,
       lineHeight: 14,
       color:'white'
     }

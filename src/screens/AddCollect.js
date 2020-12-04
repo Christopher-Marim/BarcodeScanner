@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   },
   headerModal: {
     fontFamily: commonStyles.fontFamily,
+    fontWeight:commonStyles.fontWeight,
     backgroundColor: commonStyles.color.principal,
     color: commonStyles.color.secondary,
     fontSize: 18,
@@ -105,12 +106,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   button: {
+    fontWeight:commonStyles.fontWeight,
     margin: 20,
     marginRight: 30,
     color: commonStyles.color.today,
   },
   input: {
     fontFamily: commonStyles.fontFamily,
+    fontWeight:commonStyles.fontWeight,
+    paddingHorizontal:5,
     height: 40,
     marginTop: 10,
     margin: 15,

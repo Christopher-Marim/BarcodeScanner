@@ -29,7 +29,7 @@ export default function AddList(props) {
   // caso não Retorna um Alert, caso tanto a descrição quanto a quantidade tenham sido preenchidas, add item, fecha a modal, 
   // reseta o estado dos textInput's, retorna para a screen de ItemList e faz o refresh na mesma
   
-  function addItem() {
+  function addItem({navigation = false}) {
   //  if (!ItemName || !ItemName.trim()) {
   //    Alert.alert('Dados Inválidos', 'Descrição não Informada!');
   //    return;
@@ -42,7 +42,10 @@ export default function AddList(props) {
       dispatch({type: 'ADD_ITEM', payload:[0, props.cod, props.cod, parseInt(ItemQtd,10)]});
       closeModal()
       setItemQtd("")  
-      props.navigation.goBack();
+      if(navigation != false){
+
+        navigation.goBack();
+      }
       
         dispatch({type: 'REFRESH', payload:[true]})
         setInterval(() => {
@@ -112,6 +115,7 @@ const styles = StyleSheet.create({
   },
   headerModal: {
     fontFamily: commonStyles.fontFamily,
+    fontWeight:commonStyles.fontWeight,
     backgroundColor: commonStyles.color.principal,
     color: commonStyles.color.secondary,
     fontSize: 18,
@@ -131,10 +135,11 @@ const styles = StyleSheet.create({
   },
   input: {
     fontFamily: commonStyles.fontFamily,
+    paddingHorizontal:5,
+    fontWeight:commonStyles.fontWeight,
     height: 40,
     marginTop: 10,
     margin: 15,
-    backgroundColor: 'white',
     borderBottomWidth: 2,
     borderColor: 'grey',
     borderRadius: 6,
